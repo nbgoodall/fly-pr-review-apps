@@ -16,6 +16,7 @@ If you have an existing `fly.toml` in your repo, this action will copy it with a
 | `path`     | Path to run the `flyctl` commands from. Useful if you have an existing `fly.toml` in a subdirectory.                                                                                                     |
 | `postgres` | Optional name of an existing Postgres cluster to `flyctl postgres attach` to.                                                                                                                            |
 | `update`   | Whether or not to update this Fly app when the PR is updated. Default `true`.                                                                                                                            |
+| `secrets`   | Pass secrets to be set on the app. Will be applied like `flyctl secrets set $secrets`                                                                                                                            |
 
 ## Required Secrets
 
@@ -108,6 +109,22 @@ steps:
     uses: brentd/fly-staging-app@v1
     with:
       postgres: myapp-postgres-staging-apps
+```
+
+## Example with secrets
+
+```yaml
+steps:
+  - uses: actions/checkout@v2
+
+  - name: Deploy app
+    uses: nervetattoo/fly-pr-review-apps@main
+    id: deploy
+    with:
+      name: myapp-pr-${{ github.event.number }}
+      secrets: >
+        FOO=${{ secrets.FOO }}
+        BAR=${{ secrets.BAR }}
 ```
 
 ## Example with multiple Fly apps
