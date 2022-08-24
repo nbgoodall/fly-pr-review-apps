@@ -9,19 +9,27 @@ runs:
   image: "Dockerfile"
 inputs:
   name:
+    required: false
     description: Fly app name
   image:
+    required: false
     description: Optional pre-existing Docker image to use
   region:
+    required: false
     description: Region to launch the app in (alternatively, set the env FLY_REGION)
   org:
+    required: false
     description: Organization to launch the app in (alternatively, set the env FLY_ORG)
   path:
+    required: false
     description: path to a directory containing a fly.toml to clone
   postgres:
+    required: false
     description: Optionally attach the app to a pre-existing Postgres cluster on Fly
   update:
+    required: false
     description: Whether new commits to the PR should re-deploy the Fly app
     default: true
   secrets:
-    description: Secrets to be set on the app. Separate multiple secrets with a space, i.e., `FIRST_SECRET=${{ secrets.FIRST_SECRET }} SECOND_SECRET=${{ secrets.SECOND_SECRET }}`
+    required: false
+    description: Secrets to be set on the app. Separate multiple secrets with a space, i.e., FIRST_SECRET=... SECOND_SECRET=...
