@@ -22,6 +22,7 @@ app="${INPUT_NAME:-pr-$PR_NUMBER-$REPO_OWNER-$REPO_NAME}"
 region="${INPUT_REGION:-${FLY_REGION:-iad}}"
 org="${INPUT_ORG:-${FLY_ORG:-personal}}"
 image="$INPUT_IMAGE"
+build_args="$INPUT_BUILD_ARGS"
 
 if ! echo "$app" | grep "$PR_NUMBER"; then
   echo "For safety, this action requires the app's name to contain the PR number."
@@ -46,12 +47,14 @@ if ! flyctl status --app "$app"; then
   if [ -n "$INPUT_SECRETS" ]; then
     flyctl secrets set --app "$app" $INPUT_SECRETS || true
   fi
-  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate
+
+  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --build-arg "$build_args" --strategy immediate
 elif [ "$INPUT_UPDATE" != "false" ]; then
   if [ -n "$INPUT_SECRETS" ]; then
     flyctl secrets set --app "$app" $INPUT_SECRETS || true
   fi
-  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --strategy immediate
+
+  flyctl deploy --app "$app" --region "$region" --image "$image" --region "$region" --build-arg "$build_args" --strategy immediate
 fi
 
 # Make some info available to the GitHub workflow.

@@ -30,6 +30,9 @@ inputs:
     required: false
     description: Whether new commits to the PR should re-deploy the Fly app
     default: true
+  build_args:
+    required: false
+    description: Build arguments to pass to the Docker build (fly deploy --build-arg ...), i.e., "FOO=bar".
   secrets:
     required: false
     description: Secrets to be set on the app. Separate multiple secrets with a space, i.e., FIRST_SECRET=... SECOND_SECRET=...
